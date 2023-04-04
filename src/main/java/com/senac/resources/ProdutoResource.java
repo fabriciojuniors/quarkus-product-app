@@ -1,9 +1,9 @@
 package com.senac.resources;
 
 import com.senac.model.Produto;
+import com.senac.repositories.ProdutoRepository;
 
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import java.util.Collection;
@@ -12,63 +12,42 @@ import java.util.Collection;
 public class ProdutoResource {
 
     @Inject
-    private EntityManager em;
+    private ProdutoRepository repository;
 
     @GET
     public Collection<Produto> get() {
-        return em.createQuery("from Produto", Produto.class).getResultList();
+        return repository.findAll();
     }
 
     @GET
     @Path("{id}")
     public Produto getById(@PathParam("id") final Long id) {
-        if(id == null) {
-            throw new RuntimeException("ID do produto é obrigatório");
-        }
-        return em.find(Produto.class, id);
+        return repository.findByOrElsethrow(id);
     }
 
     @POST
     @Transactional
     public Produto save(final Produto produto) {
-        em.persist(produto);
-        return produto;
+        return repository.save(produto);
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
     public Produto update(@PathParam("id") final Long id, final Produto produto) {
-        if(id == null) {
-            throw new RuntimeException("ID do produto é obrigatório");
-        }
-
-        final Produto produtoPersisted = em.find(Produto.class, id);
-        if (produtoPersisted == null) {
-            throw new RuntimeException("Produto com ID " + id + " não identificado.");
-        }
+        final Produto produtoPersisted = repository.findByOrElsethrow(id);
 
         produtoPersisted.setNome(produto.getNome());
         produtoPersisted.setValorUnitario(produto.getValorUnitario());
 
-        em.merge(produtoPersisted);
-        return produtoPersisted;
+        return repository.save(produtoPersisted);
     }
 
     @DELETE
     @Path("{id}")
     @Transactional
     public void delete(@PathParam("id") final Long id) {
-        if(id == null) {
-            throw new RuntimeException("ID do produto é obrigatório");
-        }
-
-        final Produto produtoPersisted = em.find(Produto.class, id);
-        if (produtoPersisted == null) {
-            throw new RuntimeException("Produto com ID " + id + " não identificado.");
-        }
-
-        em.remove(produtoPersisted);
+        repository.deleteById(id);
     }
 
 }
