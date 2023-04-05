@@ -1,4 +1,4 @@
-package com.senac.exceptions;
+package com.senac.exceptions.model;
 
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
