@@ -41,4 +41,8 @@ public class Categoria {
     public Collection<Produto> getProdutos() {
         return produtos;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
