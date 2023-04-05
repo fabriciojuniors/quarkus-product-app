@@ -3,6 +3,9 @@ package com.senac.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -14,14 +17,18 @@ public class Produto {
     private Long id;
 
     @Column(name = "nome", nullable = false, length = 120)
+    @NotNull(message = "não pode ser nulo")
     private String nome;
 
     @Column(nullable = false)
+    @DecimalMin(value = "0.01", message = "deve ser maior que 0.01")
+    @NotNull(message = "não pode ser nulo")
     private BigDecimal valorUnitario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria", referencedColumnName = "id")
     @JsonBackReference
+    @NotNull(message = "não pode ser nulo")
     private Categoria categoria;
 
     public Produto() {

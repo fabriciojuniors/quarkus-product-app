@@ -3,6 +3,7 @@ package com.senac.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
@@ -14,6 +15,7 @@ public class Categoria {
     private Long id;
 
     @Column(name = "nome", length = 120, nullable = false)
+    @NotNull(message = "não pode ser nulo")
     private String nome;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
