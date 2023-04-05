@@ -1,5 +1,7 @@
 package com.senac.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -17,13 +19,19 @@ public class Produto {
     @Column(nullable = false)
     private BigDecimal valorUnitario;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id")
+    @JsonBackReference
+    private Categoria categoria;
+
     public Produto() {
     }
 
-    public Produto(Long id, String nome, BigDecimal valorUnitario) {
+    public Produto(Long id, String nome, BigDecimal valorUnitario, Categoria categoria) {
         this.id = id;
         this.nome = nome;
         this.valorUnitario = valorUnitario;
+        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -38,6 +46,10 @@ public class Produto {
         return valorUnitario;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -48,5 +60,9 @@ public class Produto {
 
     public void setValorUnitario(BigDecimal valorUnitario) {
         this.valorUnitario = valorUnitario;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
