@@ -1,18 +1,25 @@
 package com.senac.repositories;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractRepository<T, I> implements IRepository<T, I> {
 
-    private final Class<T> T;
+    protected Class<T> type;
     @Inject
     private EntityManager em;
 
-    public AbstractRepository(Class<T> t) {
-        T = t;
+    public AbstractRepository() {
+    }
+
+    @PostConstruct
+    public void init() {
+        final ParameterizedType generic = (ParameterizedType) this.getClass().getGenericSuperclass();
+        this.type = (Class)generic.getActualTypeArguments()[0];
     }
 
     @Override
@@ -21,10 +28,10 @@ public abstract class AbstractRepository<T, I> implements IRepository<T, I> {
             throw new RuntimeException("ID não pode ser nulo");
         }
 
-        final T persisted = (T) em.find(T, id);
+        final T persisted = (T) em.find(type, id);
 
         if(persisted == null) {
-            throw new RuntimeException(String.format("%s com ID %s não encontrado.", T.getSimpleName(), id));
+            throw new RuntimeException(String.format("%s com ID %s não encontrado.", type.getSimpleName(), id));
         }
 
         return persisted;
@@ -32,7 +39,7 @@ public abstract class AbstractRepository<T, I> implements IRepository<T, I> {
 
     @Override
     public Collection<T> findAll() {
-        return (Collection<T>) em.createQuery("from " + T.getSimpleName(), T).getResultList();
+        return (Collection<T>) em.createQuery("from " + type.getSimpleName(), type).getResultList();
     }
 
     @Override

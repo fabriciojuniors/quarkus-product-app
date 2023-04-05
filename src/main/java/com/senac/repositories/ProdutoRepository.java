@@ -6,7 +6,4 @@ import javax.enterprise.context.RequestScoped;
 
 @RequestScoped
 public class ProdutoRepository extends AbstractRepository<Produto, Long>{
-    public ProdutoRepository() {
-        super(Produto.class);
-    }
 }
