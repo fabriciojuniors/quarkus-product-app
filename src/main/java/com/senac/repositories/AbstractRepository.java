@@ -5,9 +5,12 @@ import com.senac.model.Auditoria;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.lang.reflect.ParameterizedType;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Set;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractRepository<T extends Auditoria, I> implements IRepository<T, I> {
@@ -15,6 +18,8 @@ public abstract class AbstractRepository<T extends Auditoria, I> implements IRep
     protected Class<T> type;
     @Inject
     private EntityManager em;
+    @Inject
+    private Validator validator;
 
     public AbstractRepository() {
     }
@@ -48,6 +53,7 @@ public abstract class AbstractRepository<T extends Auditoria, I> implements IRep
     @Override
     public T save(T entity) {
         entity.setDhAlteracao(LocalDateTime.now());
+        validar(entity);
         em.persist(entity);
         return entity;
     }
@@ -60,5 +66,12 @@ public abstract class AbstractRepository<T extends Auditoria, I> implements IRep
     @Override
     public void deleteById(I id) {
         em.remove(findByOrElsethrow(id));
+    }
+
+    final void validar(final T entity) {
+        final Set validations = validator.validate(entity);
+        if(!validations.isEmpty()) {
+            throw new ConstraintViolationException(validations);
+        }
     }
 }
