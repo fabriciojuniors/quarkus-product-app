@@ -1,6 +1,8 @@
 package com.senac.resources;
 
 import com.senac.model.Categoria;
+import com.senac.model.dto.CategoriaDto;
+import com.senac.model.dto.mappers.CategoriaMapper;
 import com.senac.repositories.CategoriaRepository;
 
 import javax.inject.Inject;
@@ -13,33 +15,38 @@ public class CategoriaResource {
 
     @Inject
     private CategoriaRepository repository;
+    @Inject
+    private CategoriaMapper mapper;
 
     @GET
-    public Collection<Categoria> get() {
-        return repository.findAll();
+    public Collection<CategoriaDto> get() {
+        return repository.findAll().stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @GET
     @Path("{id}")
-    public Categoria getById(@PathParam("id") final Long id) {
-        return repository.findByOrElsethrow(id);
+    public CategoriaDto getById(@PathParam("id") final Long id) {
+        return mapper.toDto(repository.findByOrElsethrow(id));
     }
 
     @POST
     @Transactional
-    public Categoria save(final Categoria categoria) {
-        return repository.save(categoria);
+    public CategoriaDto save(final CategoriaDto dto) {
+        final Categoria categoria = repository.save(mapper.fromDto(dto));
+        return mapper.toDto(categoria);
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Categoria update(@PathParam("id") final Long id, final Categoria categoria) {
+    public CategoriaDto update(@PathParam("id") final Long id, final CategoriaDto dto) {
         final Categoria categoriaPersisted = repository.findByOrElsethrow(id);
 
-        categoriaPersisted.setNome(categoria.getNome());
+        categoriaPersisted.setNome(dto.nome());
 
-        return repository.save(categoriaPersisted);
+        return mapper.toDto(repository.save(categoriaPersisted));
     }
 
     @DELETE

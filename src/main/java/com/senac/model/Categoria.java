@@ -1,7 +1,5 @@
 package com.senac.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -19,7 +17,6 @@ public class Categoria {
     private String nome;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria")
-    @JsonManagedReference
     private Collection<Produto> produtos;
 
     public Categoria() {

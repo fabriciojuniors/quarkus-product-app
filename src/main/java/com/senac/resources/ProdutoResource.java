@@ -1,6 +1,9 @@
 package com.senac.resources;
 
 import com.senac.model.Produto;
+import com.senac.model.dto.ProdutoDto;
+import com.senac.model.dto.mappers.ProdutoMapper;
+import com.senac.repositories.CategoriaRepository;
 import com.senac.repositories.ProdutoRepository;
 
 import javax.inject.Inject;
@@ -13,34 +16,42 @@ public class ProdutoResource {
 
     @Inject
     private ProdutoRepository repository;
+    @Inject
+    private CategoriaRepository categoriaRepository;
+    @Inject
+    private ProdutoMapper mapper;
 
     @GET
-    public Collection<Produto> get() {
-        return repository.findAll();
+    public Collection<ProdutoDto> get() {
+        return repository.findAll().stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     @GET
     @Path("{id}")
-    public Produto getById(@PathParam("id") final Long id) {
-        return repository.findByOrElsethrow(id);
+    public ProdutoDto getById(@PathParam("id") final Long id) {
+        return mapper.toDto(repository.findByOrElsethrow(id));
     }
 
     @POST
     @Transactional
-    public Produto save(final Produto produto) {
-        return repository.save(produto);
+    public ProdutoDto save(final ProdutoDto dto) {
+        final Produto produto = repository.save(mapper.fromDto(dto));
+        return mapper.toDto(produto);
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Produto update(@PathParam("id") final Long id, final Produto produto) {
+    public ProdutoDto update(@PathParam("id") final Long id, final ProdutoDto dto) {
         final Produto produtoPersisted = repository.findByOrElsethrow(id);
 
-        produtoPersisted.setNome(produto.getNome());
-        produtoPersisted.setValorUnitario(produto.getValorUnitario());
+        produtoPersisted.setNome(dto.nome());
+        produtoPersisted.setValorUnitario(dto.valorUnitario());
+        produtoPersisted.setCategoria(categoriaRepository.findByOrElsethrow(dto.categoria().id()));
 
-        return repository.save(produtoPersisted);
+        return mapper.toDto(repository.save(produtoPersisted));
     }
 
     @DELETE
