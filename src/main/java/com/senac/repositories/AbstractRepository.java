@@ -1,13 +1,16 @@
 package com.senac.repositories;
 
+import com.senac.model.Auditoria;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.lang.reflect.ParameterizedType;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractRepository<T, I> implements IRepository<T, I> {
+public abstract class AbstractRepository<T extends Auditoria, I> implements IRepository<T, I> {
 
     protected Class<T> type;
     @Inject
@@ -44,6 +47,7 @@ public abstract class AbstractRepository<T, I> implements IRepository<T, I> {
 
     @Override
     public T save(T entity) {
+        entity.setDhAlteracao(LocalDateTime.now());
         em.persist(entity);
         return entity;
     }

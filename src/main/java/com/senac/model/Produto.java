@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "produtos")
-public class Produto {
+public class Produto extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

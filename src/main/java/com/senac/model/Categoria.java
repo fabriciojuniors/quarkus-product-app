@@ -6,7 +6,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "categorias")
-public class Categoria {
+public class Categoria extends Auditoria{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
