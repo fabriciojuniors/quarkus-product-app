@@ -1,9 +1,9 @@
-package com.senac.resources;
+package com.fabriciojr.resources;
 
-import com.senac.model.Categoria;
-import com.senac.model.dto.CategoriaDto;
-import com.senac.model.dto.mappers.CategoriaMapper;
-import com.senac.repositories.CategoriaRepository;
+import com.fabriciojr.model.Categoria;
+import com.fabriciojr.model.dto.CategoriaDto;
+import com.fabriciojr.model.dto.mappers.CategoriaMapper;
+import com.fabriciojr.repositories.CategoriaRepository;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;

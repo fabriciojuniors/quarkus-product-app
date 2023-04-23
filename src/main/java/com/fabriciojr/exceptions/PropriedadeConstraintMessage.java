@@ -1,4 +1,4 @@
-package com.senac.exceptions;
+package com.fabriciojr.exceptions;
 
 public class PropriedadeConstraintMessage {
     private String propriedade;

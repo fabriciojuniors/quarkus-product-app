@@ -1,6 +1,6 @@
-package com.senac.repositories;
+package com.fabriciojr.repositories;
 
-import com.senac.model.Categoria;
+import com.fabriciojr.model.Categoria;
 
 import javax.enterprise.context.RequestScoped;
 

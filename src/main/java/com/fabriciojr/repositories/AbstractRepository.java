@@ -1,6 +1,6 @@
-package com.senac.repositories;
+package com.fabriciojr.repositories;
 
-import com.senac.model.Auditoria;
+import com.fabriciojr.model.Auditoria;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;

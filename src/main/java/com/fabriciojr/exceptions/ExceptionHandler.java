@@ -1,6 +1,6 @@
-package com.senac.exceptions;
+package com.fabriciojr.exceptions;
 
-import com.senac.exceptions.model.ExceptionMessage;
+import com.fabriciojr.exceptions.model.ExceptionMessage;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

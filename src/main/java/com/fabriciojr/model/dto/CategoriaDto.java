@@ -1,4 +1,4 @@
-package com.senac.model.dto;
+package com.fabriciojr.model.dto;
 
 public record CategoriaDto(
         Long id,

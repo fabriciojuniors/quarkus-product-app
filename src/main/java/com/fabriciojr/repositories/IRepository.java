@@ -1,4 +1,4 @@
-package com.senac.repositories;
+package com.fabriciojr.repositories;
 
 import java.util.Collection;
 

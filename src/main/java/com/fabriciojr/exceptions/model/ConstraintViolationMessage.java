@@ -1,6 +1,6 @@
-package com.senac.exceptions.model;
+package com.fabriciojr.exceptions.model;
 
-import com.senac.exceptions.PropriedadeConstraintMessage;
+import com.fabriciojr.exceptions.PropriedadeConstraintMessage;
 
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;

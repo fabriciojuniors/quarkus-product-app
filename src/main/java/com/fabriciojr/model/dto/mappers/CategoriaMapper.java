@@ -1,7 +1,7 @@
-package com.senac.model.dto.mappers;
+package com.fabriciojr.model.dto.mappers;
 
-import com.senac.model.Categoria;
-import com.senac.model.dto.CategoriaDto;
+import com.fabriciojr.model.Categoria;
+import com.fabriciojr.model.dto.CategoriaDto;
 
 import javax.enterprise.context.RequestScoped;
 

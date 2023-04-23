@@ -1,4 +1,4 @@
-package com.senac.model;
+package com.fabriciojr.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

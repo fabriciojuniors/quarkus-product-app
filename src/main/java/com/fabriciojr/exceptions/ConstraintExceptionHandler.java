@@ -1,6 +1,6 @@
-package com.senac.exceptions;
+package com.fabriciojr.exceptions;
 
-import com.senac.exceptions.model.ConstraintViolationMessage;
+import com.fabriciojr.exceptions.model.ConstraintViolationMessage;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.Response;

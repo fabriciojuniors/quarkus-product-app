@@ -1,8 +1,8 @@
-package com.senac.model.dto.mappers;
+package com.fabriciojr.model.dto.mappers;
 
-import com.senac.model.Produto;
-import com.senac.model.dto.ProdutoDto;
-import com.senac.repositories.CategoriaRepository;
+import com.fabriciojr.model.Produto;
+import com.fabriciojr.model.dto.ProdutoDto;
+import com.fabriciojr.repositories.CategoriaRepository;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
